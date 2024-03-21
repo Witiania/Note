@@ -95,7 +95,7 @@ class NotebookTest extends TestCase
             'photo_url' => $link,
         ]);
 
-        $response = $this->patchJson("api/v1/notebook/{$id}", [
+        $response = $this->putJson("api/v1/notebook/{$id}", [
             'full_name' => $newName,
         ]);
 
