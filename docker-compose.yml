@@ -1,5 +1,31 @@
 version: '3.9'
 services:
+    laravel:
+        image: 'webdevops/php:8.3-alpine'
+        container_name: laravel
+        restart: always
+        env_file:
+            -   ./.env
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            - postgresql
+        networks:
+            - app-network
+
+    nginx:
+        image: nginx:stable-alpine
+        container_name: nginx
+        restart: always
+        ports:
+            - "8091:80"
+        volumes:
+            - ./docker/nginx/default.conf:/etc/nginx/nginx.conf
+        depends_on:
+            - laravel
+        networks:
+            - app-network
+
     postgresql:
         image: postgres:latest
         container_name: postgresql
